@@ -1,0 +1,58 @@
+﻿@model MyFAQ.Models.Question
+
+@{
+    ViewBag.Title = "See Question";
+    Layout = "_Layout";
+}
+
+<h3>@Model.Title</h3>
+by <a asp-controller="Users" asp-action="Get" asp-route-id="@Model.Author.UserId">
+    @if (ViewBag.MyUser != null && ViewBag.MyUser.UserId == Model.Author.UserId)
+    {
+        <b>you</b>
+    }
+    else
+    {
+        <span>@Model.Author.Username</span>
+    }
+</a>
+<hr />
+<p>@Model.Body</p>
+
+<h2>Answers</h2>
+
+@if (@Model.Answers.Count > 0)
+{
+    foreach (var answer in @Model.Answers)
+    {
+        <fieldset>
+            <legend>Answer by @answer.Author.Username</legend>
+            <p>@answer.Body</p>
+        </fieldset>
+    }
+}
+
+@if (ViewBag.MyUser != null)
+{
+    if (!@Model.Answers.Exists(q => q.Author.UserId == ViewBag.MyUser.UserId))
+    {
+        <form method="post" asp-controller="Answers" asp-action="Post">
+            <fieldset>
+                <legend>Post a new answer</legend>
+
+                <input type="hidden" name="Question[QuestionId]" value="@Model.QuestionId"/>
+                <div class="form-group">
+                    <div class="form-group">
+                        <!--label for="body">Your answer</label-->
+                        <input id="body" name="body" placeholder="Your reply to the question" class="form-control"/>
+                    </div>
+                    <input type="submit" value="Envoyer" class="btn btn-primary mb-2"/>
+                </div>
+            </fieldset>
+        </form>
+    }
+}
+else
+{
+    <a asp-area="" asp-controller="Users" asp-action="Login">Log in or register to post an answer!</a>
+}

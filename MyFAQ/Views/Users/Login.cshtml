@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+@if (ViewBag.IsInvalid)
+{
+    if (ViewBag.IsLogin)
+    {
+        <h2>Login</h2>
+        <span class="alert-danger">Invalid credentials!</span>
+    }
+    else
+    {
+        <h2>Register</h2>
+        <span class="alert-danger">Username already in use!</span>
+    }
+}
+else
+{
+    <h2>Login or Register</h2>
+}
+
+<form method="post">
+    <div class="form-group">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" name="username" placeholder="Your username here" class="form-control" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="*******" class="form-control" />
+        </div>
+        <br />
+        <input type="submit" name="login" value="Log in" class="btn btn-primary mb-2" />
+        <input type="submit" name="register" value="Register" class="btn btn-primary mb-2" />
+    </div>
+</form>

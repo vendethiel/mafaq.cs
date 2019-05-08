@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "New Question";
+    Layout = "_Layout";
+}
+
+<h2>Ask a question</h2>
+
+<form method="post" asp-controller="Questions" asp-action="Post">
+
+    <div class="form-group">
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input id="Title" name="Title" placeholder="Your question's title" class="form-control" />
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="Body">Question body</label>
+            <textarea id="Body" name="Body" class="form-control"></textarea>
+        </div>
+        <br />
+        <input type="submit" name="login" value="Ask" class="btn btn-primary mb-2" />
+    </div>
+</form>

@@ -1,0 +1,63 @@
+﻿@model System.Collections.Generic.List<MyFAQ.Models.Question>
+
+@{
+    ViewData["Title"] = "Index page";
+}
+
+<h2>List of questions -- @Model.Count asked</h2>
+
+@if (ViewBag.MyUser != null)
+{
+    <a asp-controller="Questions" asp-action="New">Ask a question</a>
+}
+else
+{
+    <h3 class="alert alert-info">Login to ask a question!</h3>
+}
+
+<ul>
+    @foreach (var question in @Model)
+    {
+    <li>
+        <a asp-controller="Questions" asp-action="Get" asp-route-id="@question.QuestionId"
+        >@question.Title</a>
+        by <a asp-controller="Users" asp-action="Get" asp-route-id="@question.Author.UserId">
+            @if (ViewBag.MyUser != null && ViewBag.MyUser.UserId == question.Author.UserId)
+            {
+                <b>you</b>
+            }
+            else
+            {
+                <span>@question.Author.Username</span>
+            }
+        </a>
+    </li>
+    }
+</ul>
+
+@if (ViewBag.Pages.Count > 1)
+{
+    <h3>Pages</h3>
+    <ul>
+        @foreach (MyFAQ.Models.Paginator.Page p in ViewBag.Pages)
+        {
+            <li>
+                @if (p.isPage)
+                {
+                    if (p.isCurrent)
+                    {
+                        <b>@p.text</b>
+                    }
+                    else
+                    {
+                        <a href="?page=@p.page">@p.text</a>
+                    }
+                }
+                else
+                {
+                    @p.text
+                }
+            </li>
+        }
+    </ul>
+}
